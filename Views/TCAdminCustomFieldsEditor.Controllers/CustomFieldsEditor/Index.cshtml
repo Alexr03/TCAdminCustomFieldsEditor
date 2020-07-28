@@ -1,0 +1,38 @@
+﻿@using System.Web.Mvc.Html
+@using Kendo.Mvc.UI
+@using TCAdmin.SDK.Web.MVC.Extensions
+@using TCAdminCustomFieldsEditor.Models
+@model TCAdminCustomFieldsEditor.Models.CustomFieldsEditorViewModel
+@{
+    Layout = this.GetTemplateFile("Shared/Main.cshtml", true);
+}
+
+@section sidebar{
+    @Html.Partial("_DefaultSidebar")
+}
+
+<h2>Application Data</h2>
+@(Html.Kendo().Grid<CustomFieldRow>()
+    .Name("customFieldsGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(x => x.Key).Title("Key");
+        columns.Bound(x => x.Value).Title("Value").Editable("function(e){return true;}");
+        columns.Command(command => { command.Edit(); command.Destroy(); }).Width(250);
+    })
+    .Editable(editable => editable.Mode(GridEditMode.InLine))
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .HtmlAttributes(new { style = "height:1000px;" })
+    .ToolBar(toolbar => toolbar.Create())
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+        .Model(model => model.Id(p => p.RowId))
+        .Create(update => update.Action("SetCustomField", "CustomFieldsEditor", new {Id = Model.ObjectId, Model.ObjectBaseType}))
+        .Read(read => read.Action("GetCustomFields", "CustomFieldsEditor", new {Id = Model.ObjectId, Model.ObjectBaseType}))
+        .Update(update => update.Action("SetCustomField", "CustomFieldsEditor", new {Id = Model.ObjectId, Model.ObjectBaseType}))
+        .Destroy(update => update.Action("RemoveCustomField", "CustomFieldsEditor", new {Id = Model.ObjectId, Model.ObjectBaseType}))
+    )
+    )
