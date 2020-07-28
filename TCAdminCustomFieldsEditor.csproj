@@ -188,6 +188,7 @@
     <ItemGroup>
       <Content Include=".gitignore" />
       <Content Include="install.sql" />
+      <Content Include="Module.json" />
       <Content Include="uninstall.sql" />
       <Content Include="Views\TCAdminCustomFieldsEditor.Controllers\CustomFieldsEditor\Index.cshtml" />
     </ItemGroup>
