@@ -6,5 +6,6 @@
         Server,
         Datacenter,
         FileServer,
+        User
     }
 }

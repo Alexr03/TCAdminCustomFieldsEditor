@@ -22,6 +22,8 @@ namespace TCAdminCustomFieldsEditor
                     return new Datacenter(id);
                 case EObjectBaseType.FileServer:
                     return new FileServer(id);
+                case EObjectBaseType.User:
+                    return new User(id);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(objectBaseType), objectBaseType, null);
             }
